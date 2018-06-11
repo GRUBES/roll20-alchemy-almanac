@@ -15,6 +15,6 @@
         
         if (typeof router[command] === "function") {
             router[command](msg.content);
-        };
+        }
     }
 })();
