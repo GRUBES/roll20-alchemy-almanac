@@ -1,0 +1,17 @@
+{
+  "name": "roll20-5e-alchemy-almanac",
+  "version": "0.0.1",
+  "description": "Implements the mechanics presented in [The Alchemy Almanac](https://www.reddit.com/r/DnDBehindTheScreen/comments/8kk4g5/the_alchemy_almanac/) for the [Roll20](https://roll20.net/) VTT application.",
+  "main": "alchemy-almanac-5e.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "rollup -c"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@etg-gh:GRUBES/roll20-alchemy-almanac.git"
+  },
+  "keywords": ["roll20", "dnd5e"],
+  "author": "Draico Dorath",
+  "license": "MIT"
+}
