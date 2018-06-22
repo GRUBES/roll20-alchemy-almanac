@@ -1,34 +1,22 @@
-var AlchemyUtils = (() => {
-    'use strict';
-    
-    const prefix = "alal-";
-    const namespace = `!${prefix}`;
-    const skills = {
-        NATURE: "-L67hi92iZC9Mk9QirM7"
-    };
-    const abilities = {
-        INT: "intelligence_mod"
-    };
-    
-    function isCommand(msg) {
-        return (
-            (msg.type === "api") &&
-            msg.content.startsWith(namespace)
-        );
-    }
-    
-    function parseCommand(msg) {
-        return msg.content
-            .split(" ")[0]
-            .toLowerCase()
-            .replace(namespace, "");
-    }
-    
-    return {
-        prefix: prefix,
-        abilities: abilities,
-        skills: skills,
-        isCommand: isCommand,
-        parseCommand: parseCommand
-    };
-})();
+/**
+ * Utility methods and constants for the Alchemy Almanac application
+ *
+ * @module alal5e/util
+ *
+ * @author Draico Dorath
+ * @copyright 2018
+ * @license MIT
+ */
+
+const skills = {
+    NATURE: "-L67hi92iZC9Mk9QirM7"
+};
+
+const abilities = {
+    INT: "intelligence_mod"
+};
+
+export {
+    abilities,
+    skills
+}
