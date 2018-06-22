@@ -11,7 +11,13 @@
     "type": "git",
     "url": "git@etg-gh:GRUBES/roll20-alchemy-almanac.git"
   },
-  "keywords": ["roll20", "dnd5e"],
+  "keywords": [
+    "roll20",
+    "dnd5e"
+  ],
   "author": "Draico Dorath",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "rollup-plugin-json": "^3.0.0"
+  }
 }

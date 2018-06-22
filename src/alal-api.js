@@ -8,6 +8,7 @@
  * @license MIT
  */
 
+import { version } from "../package.json";
 import * as AlchemyUtils from "./alal-util";
 import * as AlchemyGatherer from "./alal-gather";
 import * as AlchemyHarvester from "./alal-harvest";
@@ -101,5 +102,5 @@ function execute(command, input) {
     routes[command](...input);
 }
 
-on("ready", () => { log("[AA] Loaded."); });
+on("ready", () => { log(`[AA] v${version} loaded.`); });
 on("chat:message", route);

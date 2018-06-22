@@ -13,7 +13,6 @@
 import * as AlchemyUtils from "./alal-util";
 
 const SPEAKING_AS = "Gatherer";
-const NATURE_PREFIX = `${AlchemyUtils.skillPrefix}_${AlchemyUtils.Skills.NATURE}`;
 const CRIT_SUCCESS_MOD = 10;
 const ROLL_TEMPLATE = "5e-shaped";
 
@@ -36,28 +35,14 @@ function tableByEnv(env) {
 
 function generateNatureRoll(character, dc) {
     let dice = hasAdvantage(character) ? "2d20kh1" : "1d20";
-    return `/r {${dice}${natureMod(character)}}>${dc}`;
-}
-
-function natureMod(character) {
-    let attribute = "total_with_sign";
-    return (
-        getAttrByName(character.id, `${NATURE_PREFIX}_${attribute}`) ||
-        getAttrByName(character.id, AlchemyUtils.Abilities.INT)
-    );
+    return `/r {${dice}${ShapedUtil.skillModifier(character, ShapedUtil.Skills.NATURE)}}>${dc}`;
 }
 
 function hasAdvantage(character) {
     return (
-        isNatureProficient(character) &&
+        ShapedUtil.isProficient(character, ShapedUtil.Skills.NATURE) &&
         isHerbalismProficient(character)
     );
-}
-
-function isNatureProficient(character) {
-    let attribute = "proficiency";
-    let proficiency = getAttrByName(character.id, `${NATURE_PREFIX}_${attribute}`);
-    return (_.contains(["proficient", "expertise"], proficiency));
 }
 
 function isHerbalismProficient(character) {

@@ -8,13 +8,6 @@
  * @license MIT
  */
 
-const Skills = {
-    ARCANA: "-L67hi92iZC9Mk9QirM-",
-    NATURE: "-L67hi92iZC9Mk9QirM7",
-    RELIGION: "-L67hi92iZC9Mk9QirMB",
-    SURVIVAL: "-L67hi92iZC9Mk9QirME"
-};
-
 const Abilities = {
     INT: "intelligence_mod",
     WIS: "wisdom_mod"
@@ -22,12 +15,9 @@ const Abilities = {
 
 const prefix = "alal-";
 const commandPrefix = `!${prefix}`;
-const skillPrefix = "repeating_skill";
 
 export {
     Abilities,
-    Skills,
     prefix,
-    commandPrefix,
-    skillPrefix
+    commandPrefix
 }

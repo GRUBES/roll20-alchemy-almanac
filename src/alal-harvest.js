@@ -19,21 +19,21 @@ const SPEAKING_AS = "Harvester";
  * @readonly
  */
 const CreatureTypes = {
-    BEAST: AlchemyUtil.Skills.NATURE,
-    DRAGON: AlchemyUtil.Skills.NATURE,
-    MONSTROSITY: AlchemyUtil.Skills.NATURE,
-    PLANT: AlchemyUtil.Skills.NATURE,
-    GIANT: AlchemyUtil.Skills.SURVIVAL,
-    HUMANOID: AlchemyUtil.Skills.SURVIVAL,
-    CELESTIAL: AlchemyUtil.Skills.RELIGION,
-    FEY: AlchemyUtil.Skills.RELIGION,
-    FIEND: AlchemyUtil.Skills.RELIGION,
-    UNDEAD: AlchemyUtil.Skills.RELIGION,
-    ABERRATION: AlchemyUtil.Skills.ARCANA,
-    CONSTRUCT: AlchemyUtil.Skills.ARCANA,
-    ELEMENTAL: AlchemyUtil.Skills.ARCANA,
-    OOZE: AlchemyUtil.Skills.ARCANA,
-    NONE: 0
+    BEAST: 0,
+    DRAGON: 1,
+    MONSTROSITY: 2,
+    PLANT: 3,
+    GIANT: 4,
+    HUMANOID: 5,
+    CELESTIAL: 6,
+    FEY: 7,
+    FIEND: 8,
+    UNDEAD: 9,
+    ABERRATION: 10,
+    CONSTRUCT: 11,
+    ELEMENTAL: 12,
+    OOZE: 13,
+    NONE: 99
 };
 
 function harvest(characterId, targetId) {
@@ -54,11 +54,11 @@ function isHarvestable(character) {
 }
 
 function generateHarvestRoll(character, target) {
-    let skill = creatureType(target);
+    let skill = skillByCreatureType(creatureType(target));
     let dice = hasAdvantage(character, skill) ? "2d20kh1" : "1d20";
     let rollDC = dc(challengeRating(target));
 
-    return `/r {${dice}${skillMod(character, skill)}}>${rollDC}`;
+    return `/r {${dice}${ShapedUtil.skillModifier(character, skill)}}>${rollDC}`;
 }
 
 // Retrieves Challenge Rating of given Character
@@ -74,29 +74,59 @@ function dc(challenge) {
     return 21;
 }
 
-function isSkillProficient(character, skill) {
-    let attribute = "proficiency";
-    let proficiency = getAttrByName(character.id, `${AlchemyUtil.skillPrefix}_${skill}_${attribute}`);
-    return (_.contains(["proficient", "expertise"], proficiency));
-}
-
 function isAlchemyProficient(character) {
     let proficiencies = getAttrByName(character.id, "proficiencies");
     return /\balchemist's supplies\b/i.test(proficiencies);
 }
 
 function hasAdvantage(character, skill) {
-    return (isSkillProficient(character, skill) && isAlchemyProficient(character, skill));
-}
-
-function skillMod(character, skill) {
-    let attribute = "total_with_sign";
-    return getAttrByName(character.id, `${AlchemyUtil.skillPrefix}_${skill}_${attribute}`);
+    return (ShapedUtil.isProficient(character, skill) && isAlchemyProficient(character, skill));
 }
 
 function creatureType(character) {
     let type = getAttrByName(character.id, "type");
     return (type ? CreatureTypes[type.toUpperCase()] : CreatureTypes.NONE);
+}
+
+function skillByCreatureType(type) {
+    if (_.contains([
+        CreatureTypes.BEAST,
+        CreatureTypes.DRAGON,
+        CreatureTypes.MONSTROSITY,
+        CreatureTypes.PLANT
+    ], type)) {
+        return ShapedUtil.Skills.NATURE;
+    }
+
+    if (_.contains([
+        CreatureTypes.GIANT,
+        CreatureTypes.HUMANOID
+    ], type)) {
+        return ShapedUtil.Skills.SURVIVAL
+    }
+
+    if (_.contains([
+        CreatureTypes.CELESTIAL,
+        CreatureTypes.FEY,
+        CreatureTypes.FIEND,
+        CreatureTypes.UNDEAD
+    ], type)) {
+        return ShapedUtil.Skills.RELIGION;
+    }
+
+    if (_.contains([
+        CreatureTypes.ABERRATION,
+        CreatureTypes.CONSTRUCT,
+        CreatureTypes.ELEMENTAL,
+        CreatureTypes.OOZE
+    ], type)) {
+        return ShapedUtil.Skills.ARCANA
+    }
+
+    throw {
+        name: "ALAL_HARVEST_NO_SKILL_FOUND",
+        message: `No matching skill was found for creature type ${type}`
+    }
 }
 
 on("ready", () => { log("[AA] Harvesting module loaded."); });
