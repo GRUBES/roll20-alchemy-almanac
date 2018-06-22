@@ -16,7 +16,12 @@ const abilities = {
     INT: "intelligence_mod"
 };
 
+const prefix = "alal-";
+const commandPrefix = `!${prefix}`;
+
 export {
     abilities,
-    skills
+    skills,
+    prefix,
+    commandPrefix
 }

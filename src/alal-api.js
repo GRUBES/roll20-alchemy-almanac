@@ -8,10 +8,8 @@
  * @license MIT
  */
 
+import * as AlchemyUtils from "./alal-util";
 import * as AlchemyGatherer from "./alal-gather";
-
-const prefix = "alal-";
-const commandPrefix = `!${prefix}`;
 
 /**
  * Handler method for chat messages
@@ -42,7 +40,7 @@ function route(msg) {
 function isCommand(msg) {
     return (
         (msg.type === "api") &&
-        msg.content.startsWith(commandPrefix)
+        msg.content.startsWith(AlchemyUtils.commandPrefix)
     );
 }
 
@@ -60,7 +58,7 @@ function parseCommand(msg) {
     return msg.content
         .split(" ")[0]
         .toLowerCase()
-        .replace(commandPrefix, "");
+        .replace(AlchemyUtils.commandPrefix, "");
 }
 
 /**

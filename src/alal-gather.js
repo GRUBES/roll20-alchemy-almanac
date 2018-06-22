@@ -21,15 +21,13 @@ const ROLL_TEMPLATE = "5e-shaped";
 // FIXME Hate storing state like this
 var tableName = "";
 
-function gather(content) {
-    let [characterId, dc, env] = _.tail(content.split(/\s+/));
+function gather(characterId, dc, env) {
     let character = getObj("character", characterId);
     tableName = tableByEnv(env);
 
     dc = parseInt(dc, 10);
 
     let roll = generateNatureRoll(character, dc);
-    log(`[AA:gather] ${roll}`);
     sendChat(SPEAKING_AS, roll, onRoll, {noarchive: true});
 }
 
@@ -58,7 +56,7 @@ function hasAdvantage(character) {
 }
 
 function isNatureProficient(character) {
-    let attribute = "proficiency"
+    let attribute = "proficiency";
     return (getAttrByName(character.id, `${NATURE_PREFIX}_${attribute}`));
 }
 
@@ -89,8 +87,6 @@ function getTotal(roll) {
 }
 
 function onSuccess(roll, origRoll) {
-    log("[AA:gather] Gathering succeeded");
-
     let dc = getDc(roll);
     let crit = dc + CRIT_SUCCESS_MOD;
     let rollCount = (getTotal(roll) >= crit) ? 3 : 1;
@@ -113,8 +109,6 @@ function onSuccess(roll, origRoll) {
 }
 
 function onFailure(roll, origRoll) {
-    log("[AA:gather] Gathering failed");
-
     let withAdvantage = /2d20kh1/.test(origRoll) ? 1 : 0;
 
     let msg = [
