@@ -10,6 +10,7 @@
 
 import * as AlchemyUtils from "./alal-util";
 import * as AlchemyGatherer from "./alal-gather";
+import * as AlchemyHarvester from "./alal-harvest";
 
 /**
  * Handler method for chat messages
@@ -89,7 +90,8 @@ function parseInput(msg) {
  */
 function execute(command, input) {
     const routes = {
-        "gather": AlchemyGatherer.gather
+        "gather": AlchemyGatherer.gather,
+        "harvest": AlchemyHarvester.harvest
     };
 
     if (!(routes[command] && (typeof routes[command] === "function"))) {

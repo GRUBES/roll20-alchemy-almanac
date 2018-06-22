@@ -13,8 +13,7 @@
 import * as AlchemyUtils from "./alal-util";
 
 const SPEAKING_AS = "Gatherer";
-const SKILL_PREFIX = "repeating_skill";
-const NATURE_PREFIX = `${SKILL_PREFIX}_${AlchemyUtils.skills.NATURE}`;
+const NATURE_PREFIX = `${AlchemyUtils.skillPrefix}_${AlchemyUtils.Skills.NATURE}`;
 const CRIT_SUCCESS_MOD = 10;
 const ROLL_TEMPLATE = "5e-shaped";
 
@@ -44,7 +43,7 @@ function natureMod(character) {
     let attribute = "total_with_sign";
     return (
         getAttrByName(character.id, `${NATURE_PREFIX}_${attribute}`) ||
-        getAttrByName(character.id, AlchemyUtils.abilities.INT)
+        getAttrByName(character.id, AlchemyUtils.Abilities.INT)
     );
 }
 
@@ -57,7 +56,8 @@ function hasAdvantage(character) {
 
 function isNatureProficient(character) {
     let attribute = "proficiency";
-    return (getAttrByName(character.id, `${NATURE_PREFIX}_${attribute}`));
+    let proficiency = getAttrByName(character.id, `${NATURE_PREFIX}_${attribute}`);
+    return (_.contains(["proficient", "expertise"], proficiency));
 }
 
 function isHerbalismProficient(character) {
@@ -128,6 +128,6 @@ function tableRoll() {
     return `[[1t[${this}]]]`;
 }
 
-export {
-    gather
-}
+on("ready", () => { log("[AA] Gathering module loaded."); });
+
+export { gather }
