@@ -1,6 +1,6 @@
 {
   "name": "roll20-5e-alchemy-almanac",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Implements the mechanics presented in [The Alchemy Almanac](https://www.reddit.com/r/DnDBehindTheScreen/comments/8kk4g5/the_alchemy_almanac/) for the [Roll20](https://roll20.net/) VTT application.",
   "main": "alchemy-almanac-5e.js",
   "scripts": {
